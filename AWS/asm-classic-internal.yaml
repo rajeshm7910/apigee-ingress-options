@@ -1,0 +1,61 @@
+# Default ASM Profile for multicloud installations.
+#   * Security: citadel
+#   * Telemetry: prometheus
+#   * Networking: istiod
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+spec:
+  profile: default
+  meshConfig:
+    # Protocol detection timeout is not supported
+    protocolDetectionTimeout: 0s
+    # Locality load balancing is not supported
+    localityLbSetting:
+      enabled: false
+  components:
+    ingressGateways:
+      - name: istio-ingressgateway
+        enabled: true
+        k8s:
+          service:
+            type: LoadBalancer
+            ports:
+              - name: status-port
+                port: 15021
+                targetPort: 15021
+              - name: https
+                port: 443
+                targetPort: 8443
+          hpaSpec:
+            maxReplicas: 2
+          serviceAnnotations:
+            service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    # The default profile is tuned to fit on smaller clusters.
+    # Increase cpu req to ensure we can handle larger scale clusters.
+    pilot:
+      k8s:
+        resources:
+          requests:
+            cpu: 500m
+        hpaSpec:
+          minReplicas: 2
+        replicaCount: 2
+  values:
+    # Protocol sniffing is not supported
+    pilot:
+      enableProtocolSniffingForOutbound: false
+      enableProtocolSniffingForInbound: false
+    # Enable telemetry v2 backend by Prometheus.
+    telemetry:
+      enabled: false
+      v1:
+        enabled: false
+      v2:
+        enabled: false
+        prometheus:
+          enabled: false
+        stackdriver:
+          enabled: false
+    sidecarInjectorWebhook:
+      rewriteAppHTTPProbe: true
+
