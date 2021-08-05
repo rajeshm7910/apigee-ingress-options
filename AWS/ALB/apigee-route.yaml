@@ -1,0 +1,19 @@
+---
+apiVersion: apigee.cloud.google.com/v1alpha1
+kind: ApigeeRoute
+metadata:
+  name: wildcard-gateway-apigee
+  namespace: apigee
+spec:
+  hostnames:
+  - "*"
+  ports:
+  - number: 443
+    protocol: HTTPS
+    tls:
+      credentialName: tls-apigee-hybrid-it-poc
+      mode: SIMPLE
+  selector:
+    app: istio-ingressgateway
+  enableNonSniClient: true
+---
