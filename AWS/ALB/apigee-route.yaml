@@ -11,7 +11,7 @@ spec:
   - number: 443
     protocol: HTTPS
     tls:
-      credentialName: tls-apigee-hybrid-it-poc
+      credentialName: tls-apigee-hybrid-poc
       mode: SIMPLE
   selector:
     app: istio-ingressgateway

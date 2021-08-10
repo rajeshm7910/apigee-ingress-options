@@ -9,10 +9,9 @@ metadata:
     alb.ingress.kubernetes.io/load-balancer-name: alb-apigee-poc-ingress
     alb.ingress.kubernetes.io/tags: Role=Apigee,Component=EKS,Environment=POC
     alb.ingress.kubernetes.io/ip-address-type: ipv4
-    alb.ingress.kubernetes.io/scheme: internal
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80},{"HTTPS": 443}]'
     alb.ingress.kubernetes.io/backend-protocol: HTTPS
     alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
     alb.ingress.kubernetes.io/healthcheck-port: '15021'
@@ -22,7 +21,7 @@ metadata:
     alb.ingress.kubernetes.io/healthcheck-timeout-seconds: '8'
     alb.ingress.kubernetes.io/healthy-threshold-count: '2'
     alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-2:966891400085:certificate/80294410-009a-49f1-b9c0-3f50d40fed3e
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-2:966891400085:certificate/89e8f9bd-67e1-4dc6-9f9e-7b5ea3c2a296
     alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS-1-2-Ext-2018-06
 spec:
   backend:
